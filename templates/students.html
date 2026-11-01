@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        body {
+            background: #F0FDFA;
+            color: #1F2937;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        nav {
+            background: #134E4A;
+            color: white;
+            padding: 16px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav h2 {
+            color: white;
+            margin: 0;
+        }
+
+        nav div {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #99F6E4;
+        }
+
+        .container {
+            max-width: 1150px;
+            width: 90%;
+            margin: 35px auto;
+        }
+
+        h1, h2 {
+            color: #134E4A;
+        }
+
+        .subtitle {
+            color: #64748B;
+            margin-bottom: 25px;
+        }
+
+        .section-card {
+            background: white;
+            border: 1px solid #CCFBF1;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(19, 78, 74, 0.05);
+        }
+
+        .section-card h2 {
+            margin-top: 0;
+            font-size: 21px;
+        }
+
+        .student-form {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            align-items: end;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #134E4A;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #CBD5E1;
+            border-radius: 7px;
+            font-size: 14px;
+            background: white;
+            color: #1F2937;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #0D9488;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+        }
+
+        .form-button {
+            grid-column: 1 / -1;
+        }
+
+        button {
+            background: #0D9488;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            padding: 12px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0F766E;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        th {
+            background: #134E4A;
+            color: white;
+            font-weight: 600;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #F8FFFE;
+        }
+
+        tbody tr:hover {
+            background: #CCFBF1;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #64748B;
+            padding: 25px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 5px;
+            color: #0F766E;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            nav {
+                padding: 18px;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            nav div {
+                gap: 12px;
+            }
+
+            .student-form {
+                grid-template-columns: 1fr;
+            }
+
+            .form-button {
+                grid-column: auto;
+            }
+
+            .section-card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>📚 Library Management</h2>
+        <div>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('books') }}">Books</a>
+            <a href="{{ url_for('add_book') }}">Add Book</a>
+            <a href="{{ url_for('students') }}">Students</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1>Student Management</h1>
+        <p class="subtitle">Register students and manage their information.</p>
+
+        <section class="section-card">
+            <h2>Register a Student</h2>
+
+            <form method="POST" class="student-form">
+                <div class="form-group">
+                    <label for="name">Student Name</label>
+                    <input type="text" id="name" name="name"
+                           placeholder="Enter student name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email"
+                           placeholder="Enter email address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="course">Course</label>
+                    <input type="text" id="course" name="course"
+                           placeholder="Enter course name" required>
+                </div>
+
+                <div class="form-button">
+                    <button type="submit">Register Student</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="section-card">
+            <h2>Registered Students</h2>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Course</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ student.id }}</td>
+                            <td>{{ student.name }}</td>
+                            <td>{{ student.email }}</td>
+                            <td>{{ student.course }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="empty-message">
+                                No students registered yet.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <a class="back-link" href="{{ url_for('dashboard') }}">
+            ← Back to Dashboard
+        </a>
+    </main>
+
+</body>
+</html>

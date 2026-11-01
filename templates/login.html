@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Library Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #F0FDFA;
+            color: #1F2937;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .brand h1 {
+            color: #134E4A;
+            font-size: 30px;
+            margin: 0 0 10px;
+            line-height: 1.3;
+        }
+
+        .brand p {
+            color: #64748B;
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .login-card {
+            background: #FFFFFF;
+            padding: 35px;
+            border-radius: 14px;
+            border: 1px solid #CCFBF1;
+            border-top: 5px solid #0D9488;
+            box-shadow: 0 10px 30px rgba(19, 78, 74, 0.09);
+        }
+
+        .login-card h2 {
+            color: #134E4A;
+            text-align: center;
+            margin: 0 0 25px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #134E4A;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #CBD5E1;
+            border-radius: 7px;
+            font-size: 15px;
+            color: #1F2937;
+            background: #FFFFFF;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0D9488;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 13px;
+            background: #0D9488;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .login-button:hover {
+            background: #0F766E;
+        }
+
+        .error {
+            padding: 11px;
+            margin-bottom: 18px;
+            background: #FEF2F2;
+            color: #B91C1C;
+            border: 1px solid #FECACA;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .footer-text {
+            text-align: center;
+            color: #64748B;
+            font-size: 13px;
+            margin-top: 22px;
+        }
+
+        @media (max-width: 480px) {
+            .brand h1 {
+                font-size: 25px;
+            }
+
+            .login-card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="login-wrapper">
+
+        <header class="brand">
+            <h1>📚 Library Management System</h1>
+            <p>Manage your library with ease.</p>
+        </header>
+
+        <section class="login-card">
+            <h2>Admin Login</h2>
+
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% endif %}
+
+            <form method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter username"
+                        required
+                        autocomplete="username"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter password"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <button type="submit" class="login-button">Login</button>
+            </form>
+        </section>
+
+        <p class="footer-text">Library Management System © 2026</p>
+
+    </main>
+
+</body>
+</html>

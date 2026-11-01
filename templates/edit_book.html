@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Book</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <h2>📚 Library Management</h2>
+        <div>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('books') }}">Books</a>
+            <a href="{{ url_for('add_book') }}">Add Book</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <main class="form-container">
+        <h1>Edit Book</h1>
+
+        <form method="POST">
+            <label>Book Title</label>
+            <input type="text" name="title" value="{{ book.title }}" required>
+
+            <label>Author</label>
+            <input type="text" name="author" value="{{ book.author }}" required>
+
+            <label>Category</label>
+            <input type="text" name="category" value="{{ book.category }}" required>
+
+            <label>Quantity</label>
+            <input type="number" name="quantity" min="0" value="{{ book.quantity }}" required>
+
+            <button type="submit">Update Book</button>
+        </form>
+
+        <p><a href="{{ url_for('books') }}">← Back to Books</a></p>
+    </main>
+
+</body>
+</html>

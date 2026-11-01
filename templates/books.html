@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Books | Library Management System</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green: #0D9488;
+            --green-dark: #0F766E;
+            --green-light: #CCFBF1;
+            --background: #F0FDFA;
+            --text: #1F2937;
+            --muted: #64748B;
+            --border: #CCFBF1;
+            --white: #FFFFFF;
+            --red: #DC2626;
+        }
+
+        body {
+            margin: 0;
+            padding: 35px 24px;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: auto;
+            padding: 32px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 8px 28px rgba(19, 78, 74, 0.06);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .heading {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .heading-icon {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            background: var(--green-light);
+            font-size: 26px;
+        }
+
+        h1 {
+            margin: 0;
+            color: #134E4A;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            margin: 5px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+            padding: 11px 16px;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+        }
+
+        .green {
+            background: var(--green);
+            color: white;
+        }
+
+        .green:hover {
+            background: var(--green-dark);
+            color: white;
+        }
+
+        .soft {
+            background: var(--green-light);
+            color: var(--green-dark);
+        }
+
+        .soft:hover {
+            background: #99F6E4;
+            color: var(--green-dark);
+        }
+
+        .neutral {
+            background: #E2E8F0;
+            color: #334155;
+        }
+
+        .neutral:hover {
+            background: #CBD5E1;
+            color: #1F2937;
+        }
+
+        .red {
+            background: #FEF2F2;
+            color: #B91C1C;
+        }
+
+        .red:hover {
+            background: var(--red);
+            color: white;
+        }
+
+        .search-panel {
+            padding: 20px;
+            margin-bottom: 28px;
+            background: #F0FDFA;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .search-label {
+            display: block;
+            margin-bottom: 11px;
+            color: #134E4A;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-form input {
+            flex: 1;
+            min-width: 0;
+            height: 45px;
+            padding: 0 14px;
+            margin: 0;
+            border: 1px solid #99F6E4;
+            border-radius: 8px;
+            background: white;
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-form input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            color: #134E4A;
+            font-size: 19px;
+        }
+
+        .count {
+            padding: 7px 12px;
+            background: var(--green-light);
+            color: var(--green-dark);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            text-align: left;
+        }
+
+        thead {
+            background: #CCFBF1;
+        }
+
+        th {
+            padding: 16px;
+            color: #134E4A;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+            border-bottom: 1px solid #99F6E4;
+        }
+
+        td {
+            padding: 16px;
+            font-size: 14px;
+            border-bottom: 1px solid #F0FDFA;
+            vertical-align: middle;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #F0FDFA;
+        }
+
+        .book-id {
+            color: var(--muted);
+        }
+
+        .book-title {
+            color: #134E4A;
+            font-weight: 600;
+        }
+
+        .quantity {
+            display: inline-block;
+            min-width: 35px;
+            padding: 5px 10px;
+            border-radius: 7px;
+            background: var(--green-light);
+            color: var(--green-dark);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .actions .button {
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+
+        .actions form {
+            margin: 0;
+        }
+
+        .empty-message {
+            padding: 45px 20px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .empty-message strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #134E4A;
+            font-size: 16px;
+        }
+
+        .bottom-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 26px;
+            padding-top: 22px;
+            border-top: 1px solid var(--border);
+        }
+
+        .bottom-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 14px 9px;
+            }
+
+            .container {
+                padding: 20px 14px;
+                border-radius: 12px;
+            }
+
+            .heading-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 22px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+
+            .header {
+                align-items: flex-start;
+            }
+
+            .search-form {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .search-form input {
+                grid-column: 1 / -1;
+                width: 100%;
+            }
+
+            .search-form .button {
+                width: 100%;
+            }
+
+            .bottom-section {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .bottom-links {
+                width: 100%;
+            }
+
+            .bottom-links .button {
+                flex: 1 1 auto;
+            }
+
+            th, td {
+                padding: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+
+        <header class="header">
+            <div class="heading">
+                <div class="heading-icon">📚</div>
+                <div>
+                    <h1>Manage Books</h1>
+                    <p class="subtitle">Organize and manage your library collection.</p>
+                </div>
+            </div>
+
+            <a href="{{ url_for('add_book') }}" class="button green">
+                + Add New Book
+            </a>
+        </header>
+
+        <section class="search-panel">
+            <label for="book-search" class="search-label">
+                Search your collection
+            </label>
+
+            <form method="GET" action="{{ url_for('books') }}" class="search-form">
+                <input
+                    id="book-search"
+                    type="text"
+                    name="search"
+                    placeholder="Enter book title, author, or category..."
+                    value="{{ search | default('') }}"
+                >
+
+                <button type="submit" class="button green">
+                    Search
+                </button>
+
+                <a href="{{ url_for('books') }}" class="button neutral">
+                    Clear
+                </a>
+            </form>
+        </section>
+
+        <section>
+            <div class="section-heading">
+                <h2>Book Collection</h2>
+                <span class="count">{{ books | length }} book(s) found</span>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Book Title</th>
+                            <th>Author</th>
+                            <th>Category</th>
+                            <th>Available Copies</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for book in books %}
+                        <tr>
+                            <td class="book-id">{{ book.id }}</td>
+                            <td class="book-title">{{ book.title }}</td>
+                            <td>{{ book.author }}</td>
+                            <td>{{ book.category }}</td>
+                            <td>
+                                <span class="quantity">{{ book.quantity }}</span>
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <a
+                                        href="{{ url_for('edit_book', book_id=book.id) }}"
+                                        class="button soft"
+                                    >
+                                        Edit
+                                    </a>
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for('delete_book', book_id=book.id) }}"
+                                        onsubmit="return confirm('Are you sure you want to delete this book?');"
+                                    >
+                                        <button type="submit" class="button red">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="empty-message">
+                                <strong>
+                                    {% if search %}
+                                        No matching books found
+                                    {% else %}
+                                        No books added yet
+                                    {% endif %}
+                                </strong>
+
+                                {% if search %}
+                                    Try searching with a different title, author, or category.
+                                {% else %}
+                                    Add your first book to start building your collection.
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer class="bottom-section">
+            <a href="{{ url_for('dashboard') }}" class="button neutral">
+                ← Dashboard
+            </a>
+
+            <nav class="bottom-links">
+                <a href="{{ url_for('students') }}" class="button soft">
+                    Manage Students
+                </a>
+
+                <a href="{{ url_for('issue_book') }}" class="button green">
+                    Issue a Book
+                </a>
+
+                <a href="{{ url_for('issued_books') }}" class="button neutral">
+                    Issue / Return Records
+                </a>
+
+                <a href="{{ url_for('logout') }}" class="button red">
+                    Logout
+                </a>
+            </nav>
+        </footer>
+
+    </main>
+</body>
+</html>

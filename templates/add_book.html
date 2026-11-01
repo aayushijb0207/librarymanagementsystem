@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Book | Library Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #F0FDFA;
+            color: #1F2937;
+        }
+
+        nav {
+            background: #134E4A;
+            color: white;
+            padding: 18px 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav h2 {
+            color: white;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav div {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 22px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #99F6E4;
+        }
+
+        .form-container {
+            width: 90%;
+            max-width: 650px;
+            margin: 45px auto;
+            padding: 35px;
+            background: white;
+            border: 1px solid #CCFBF1;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(19, 78, 74, 0.08);
+        }
+
+        h1 {
+            color: #134E4A;
+            font-size: 28px;
+            margin: 0 0 10px;
+        }
+
+        .subtitle {
+            color: #64748B;
+            margin: 0 0 28px;
+            font-size: 15px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 4px;
+            color: #134E4A;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #CBD5E1;
+            border-radius: 7px;
+            background: #FFFFFF;
+            color: #1F2937;
+            font-size: 15px;
+        }
+
+        input::placeholder {
+            color: #94A3B8;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0D9488;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            background: #0D9488;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        button:hover {
+            background: #0F766E;
+        }
+
+        .error {
+            padding: 12px;
+            border-radius: 7px;
+            color: #B91C1C;
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: #0F766E;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 18px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav div {
+                gap: 14px;
+            }
+
+            .form-container {
+                width: 92%;
+                margin: 25px auto;
+                padding: 22px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>📚 Library Management</h2>
+        <div>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('books') }}">Books</a>
+            <a href="{{ url_for('add_book') }}">Add Book</a>
+            <a href="{{ url_for('students') }}">Students</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <main class="form-container">
+        <h1>Add a New Book</h1>
+        <p class="subtitle">Enter the book details to add it to your library.</p>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            <label for="title">Book Title</label>
+            <input type="text" id="title" name="title"
+                   placeholder="Enter book title" required>
+
+            <label for="author">Author</label>
+            <input type="text" id="author" name="author"
+                   placeholder="Enter author name" required>
+
+            <label for="category">Category</label>
+            <input type="text" id="category" name="category"
+                   placeholder="e.g. Programming" required>
+
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity"
+                   min="0" placeholder="Enter quantity" required>
+
+            <button type="submit">Save Book</button>
+        </form>
+
+        <a class="back-link" href="{{ url_for('books') }}">
+            ← Back to Books
+        </a>
+    </main>
+
+</body>
+</html>

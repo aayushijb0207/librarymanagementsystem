@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Library Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #F0FDFA;
+            color: #1F2937;
+        }
+
+        nav {
+            width: 100%;
+            background: #134E4A;
+            color: white;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav h2 {
+            color: white;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav div {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #99F6E4;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .welcome-title {
+            color: #134E4A;
+            font-size: 32px;
+            margin: 0 0 10px;
+        }
+
+        .welcome-text {
+            color: #64748B;
+            margin: 0 0 30px;
+            font-size: 16px;
+        }
+
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #CCFBF1;
+            border-top: 5px solid #0D9488;
+            border-radius: 14px;
+            padding: 28px;
+            box-shadow: 0 5px 18px rgba(19, 78, 74, 0.06);
+        }
+
+        .card h3 {
+            color: #134E4A;
+            font-size: 19px;
+            margin: 0 0 22px;
+        }
+
+        .card p {
+            color: #0D9488;
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .quick-actions a {
+            display: inline-block;
+            padding: 13px 22px;
+            background: #0D9488;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .quick-actions a:hover {
+            background: #0F766E;
+        }
+
+        @media (max-width: 650px) {
+            nav {
+                padding: 18px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav div {
+                gap: 14px;
+            }
+
+            .container {
+                width: 92%;
+                margin: 28px auto;
+            }
+
+            .welcome-title {
+                font-size: 27px;
+            }
+
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>📚 Library Management</h2>
+        <div>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('books') }}">Books</a>
+            <a href="{{ url_for('add_book') }}">Add Book</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1 class="welcome-title">Welcome, Admin!</h1>
+        <p class="welcome-text">Manage your library from one place.</p>
+
+        <section class="dashboard-cards">
+            <div class="card">
+                <h3>Book Titles</h3>
+                <p>{{ total_books }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Book Copies</h3>
+                <p>{{ total_copies }}</p>
+            </div>
+        </section>
+
+        <section class="quick-actions">
+            <a href="{{ url_for('books') }}">View All Books</a>
+            <a href="{{ url_for('add_book') }}">Add New Book</a>
+        </section>
+    </main>
+
+</body>
+</html>
